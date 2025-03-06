@@ -6,20 +6,35 @@
 //
 function setup() {
   createCanvas(720, 540);
+}
+function draw() {
   background(37, 38, 23);
+  strokeWeight(3);  
+  //create center line
+  line(0, 270, 720, 270);
+  line(360, 0, 360, 720);
+  //left side of face
+  line(180, 0, 180, 540);
+  //right side of face
+  line(540, 0, 540, 540);
+  //bottom side of face
+  line(0, 405, 720, 405);
   //this is lil bro forehead//////////////
-  noStroke(0);
-  fill(49, 55, 89); [
+  fill(49, 55, 89); [//////////////////////
+  ////////////////////////////
   ellipse(360, 160, 500, 175),//////////
   fill(77, 87, 140),//////////////
   stroke(77, 87, 140),////////
-  ellipse(360, 160, 400, 175)]
+  ellipse(360, 160, 400, 175)]/////////
+    /////////////////////////////
+  //////////////////////////////////////////
     //two sets of eyes
     //left eye
     fill(220, 77, 77,); [
     stroke(220, 77, 77,),
     ellipse(260, 320, 20, 10),
     ellipse(97, 310, 20, 10) ]
+
     fill(250, 250, 220); [
     stroke(250, 250, 220),
     ellipse(180, 310, 175, 70) ]
@@ -64,10 +79,9 @@ function setup() {
     ellipse(360, 485, 240, 40);
     fill(37, 38, 23);
     ellipse(360, 460, 240, 43);
-}
     //chin
     //fill(117, 73, 72);  [
     //ellipse(360, 540, 280, 45),
     //fill(199, 60, 56),
     //ellipse(360, 540, 300, 45)  ]
-
+    }
