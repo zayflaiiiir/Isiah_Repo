@@ -1,11 +1,15 @@
 ///WELCOME TO ASSIGNMENT 2////
 /////YOU ARE LOOKING AT TITLE: D1G1T4L FETUS///
 //BY ISIAH BERMUDEZ MARCH 1ST, 2025///
+//doubleClicked??
 let x, y, r, g, b;
 let circle1X = 180;
 let circle1Y = 300;
 let circle2X = 540;
 let circle2Y = 300;
+
+let xMove = 0;
+let size = 100;
 let maxGrow = 100;
 let grow = 50;
 //let Move = 0;
@@ -92,6 +96,14 @@ function draw() {
       grow --+ 100;
     }
     
+    if (keyIsDown(LEFT_ARROW))
+      {
+        xMove--;
+      }
+      if (keyIsDown(RIGHT_ARROW))
+      {
+        xMove++;
+      }
     //move pupil 1
     //circle1X += 2;
     //move pupil 2
@@ -105,6 +117,9 @@ function draw() {
   fill(37, 38, 23),
   ellipse(circle2X, circle2Y, grow, grow);
 
+  
+
+  ///trying to make pill random color on click
   r = random(0, 255);
   g = 0;
   b = random(0, 255);
@@ -112,8 +127,14 @@ function draw() {
   y = random(0, 400);
 
   noStroke();
-  fill (random);
+  fill (255, 122, 72);
   ellipse (mouseX, mouseY, 65, 35);
+
+  fill(255);
+  text('ë', mouseX, mouseY);
+
+  fill(255);
+  text('right click...', 360, 260)
 
   
 }
@@ -122,7 +143,7 @@ function mousePressed()
   //let d = dist(mouseX, mouseY, x1, y1);
 
   //if (d < 100)
-  maxGrow = random(100, -50);
-  grow = random(100, -50);
-
+  maxGrow = random(100, 10);
+  grow = random(100, 50);
 }
+
