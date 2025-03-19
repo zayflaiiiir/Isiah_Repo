@@ -27,6 +27,10 @@ double jump S - arrow head
 
 */
 
+//enemies
+
+let daggerX = 0;
+let daggerY = 0;
 let toggle = true; 
 let state = "pregame"; //storing our states as Strings 
 
@@ -91,9 +95,66 @@ b= random(0, 0, 225);
       
 function preGame() 
 {
-  background(0,255,0);
+  background(37, 38, 23);
 
-  //fill(r, g, b);
+  
+  
+  noStroke(0);
+  fill(49, 55, 89); [
+  ellipse(360, 160, 500, 175),//////////
+  fill(77, 87, 140),//////////////
+  stroke(77, 87, 140),////////
+  ellipse(360, 160, 400, 175)]
+    //two sets of eyes
+    //left eye
+    fill(220, 77, 77,); [
+    stroke(220, 77, 77,),
+    ellipse(260, 320, 20, 10),
+    ellipse(97, 310, 20, 10) ]
+    fill(250, 250, 220); [
+    stroke(250, 250, 220),
+    ellipse(180, 310, 175, 70) ]
+    //right eye
+    fill(220, 77, 77)
+    stroke(220, 77, 77,)
+    ellipse(460, 320, 20, 10)
+    ellipse(623, 310, 20, 10)
+    fill(250, 250, 220),
+    stroke(250, 250, 220)
+    ellipse(540, 310, 175, 70)
+    ///////MAYBE USE CURSOR FUNCTION TO CONTROL PUPILS WITH EYESS
+    
+    
+ 
+    fill(49, 55, 89); [
+      noStroke(0),
+      ellipse(308, 395, 50, 26),
+      ellipse(408, 395, 50, 26),
+      ellipse(360, 405, 115, 56),
+      bezier(360, 320, 325, 325, 325, 325, 320, 385),
+      bezier(360, 320, 385, 325, 385, 325, 400, 380),
+      triangle(320, 385, 400, 385, 360, 320),]
+      fill(77, 87, 140)
+      ellipse(360, 405, 85, 36),
+   
+    fill(49, 55, 89)
+    noStroke(0)
+    ellipse(180, 385, 200, 28),
+    fill(77, 87, 140)
+    ellipse(180, 385, 85, 28),[
+  
+    fill(49, 55, 89),
+    noStroke(0),
+    ellipse(540, 385, 200, 28), 
+    fill(77, 87, 140),
+    ellipse(540, 385, 85, 28), ]
+   
+    fill(77, 87, 140);
+    ellipse(360, 485, 240, 40);
+    fill(37, 38, 23);
+    ellipse(360, 460, 240, 43);
+ 
+    fill(225, 0, 0);
   text("story", width/1.5, height/1.8);
   text("options", width/1.5, height/1.6);
   text('settings', width/1.5, height/1.4);
@@ -114,10 +175,25 @@ function preGame()
 
 function game() 
 {
+  /*
+  player has 100 health if player drops to 100 he will die and gave ends
+- animate jump, dash attack commands
+
+- player faces npc that also have individual life and if they reach 0 they die aswell
+
+**IF SLASH TOUCHES NPC, NPC LOSES 20 HP (FOR EXAMPLE)
+  */
+
   background(0, 0, 255);
   text("health bar", 70, 45);
+  text("player advances to next stage when you reach 768", width/2, height/2 + 50);
+
+  text("use arrow keys", width/2, height/2 - 50);
+
+  //dagger falls
+
   //p1
-  ellipse(ellipseX, ellipseY, 100, 100);
+  ellipse(ellipseX, ellipseY, 50, 50);
   ellipseY = ellipseY+5;
 
   //function keyIsDown()  {
@@ -157,7 +233,7 @@ function game()
   rect(10, 10, health, 15);
 	
   //game is over when ellipse reaches right of screen
-  if (ellipseY > width) 
+  if (ellipseY > 768) 
 	{ 
     state = "game over";
     ellipseY = (width/12, 400); //reset ellipseY value
@@ -167,8 +243,7 @@ function game()
 function gameOver() 
 {
   background(255, 0, 0);
-  text("everyone loses!", width/2, height/2);
-  text("click to play again.", width/2, height/2 + 50);
+  text("rip!", width/2, height/2);
 
 
 
