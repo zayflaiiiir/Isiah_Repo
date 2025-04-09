@@ -134,7 +134,7 @@ function draw() {
   text('ë', mouseX, mouseY);
 
   fill(255);
-  text('right click...', 360, 260)
+  text('right click...', 360, 260);
 
   
 }

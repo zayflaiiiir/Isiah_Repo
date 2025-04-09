@@ -14,7 +14,7 @@ let pixel = []; //declare pixel. = [] initialize the variable pixel as an empty 
 
 let cols, rows; //declare coloms and rows
 
-let size = 10; //let pixel equal the size of 6
+let size = 8; //let pixel equal the size of 6
 
 function preload()  { //preload our image and declare it as meat
   meat = loadImage("/image/_.jpeg");
