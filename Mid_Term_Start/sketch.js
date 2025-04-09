@@ -29,19 +29,30 @@ double jump S - arrow head
 
 //enemies
 
-let daggerX = 0;
-let daggerY = 0;
-let toggle = true; 
+
+
 let state = "pregame"; //storing our states as Strings 
 
-let ellipseX = 10; //ellipse X, Y is our p1
-let ellipseY = 0; //y position of p1
+let stage= 0;
+
+//player
+let playerX = 10; //ellipse X, Y is our p1
+let playerY = 400; //y position of p1
 let move = 0;
-let health = 100; //health bar
+let playerhealthX = 100; //player health bar
+let playerSpeed = 0;
+
+//enemy
+let enemyX = 755;
+let enemyY = 400;
+let enemyHealth = 100;
+let enemySpeed = 0;
 
 //jump
-let yVel = 0;
-let gravity = 10
+let x, y, groundY;
+let yVel, gravity, jumpHeight;
+let isJumping = false;
+
 
 let width = 768;
 let height = 420;
@@ -51,6 +62,13 @@ function setup()
   textAlign(CENTER);
   createCanvas (768, 420);
   textSize(20);
+
+  playerX = 10;
+  playerY = height - 20; //initial position on the ground
+  groundY = height - 20;
+  yVel = 0;
+  gravity = 1;
+  jumpHeight = -20;
 }
 
 
@@ -61,7 +79,14 @@ function draw()
     preGame();
      
   } 
-	else if (state == "game") 
+  /*
+  else if (state == "character selection")
+  {
+    characterSelect();
+  }
+	*/
+
+  else if (state == "game") 
 	{
     game();
   } 
@@ -75,14 +100,15 @@ function draw()
 
 function mousePressed() 
 {
-  if (state == "pregame") 
-	{
-    state = "game";
+   if (state == "pregame") 
+   {
+   state = "game";
   } 
-	else if (state == "game over") 
-	{
-    state = "pregame";
-  }
+	 else if (state == "game over") 
+	 {
+   state = "pregame";
+   }
+  stage++;
 }
 
 //let text = (r, g, b);
@@ -164,19 +190,20 @@ function preGame()
 
 }
 
-//function characters()
-//{
-  //background(0, 180, 0);
+function characterSelect()
+{
+  //choose characters
+  background(0, 180, 0);
 
   
-//}
+}
 
 
 
 function game() 
 {
   /*
-  player has 100 health if player drops to 100 he will die and gave ends
+  player has 100 health if player drops to 100 he will die and game ends
 - animate jump, dash attack commands
 
 - player faces npc that also have individual life and if they reach 0 they die aswell
@@ -190,60 +217,71 @@ function game()
 
   text("use arrow keys", width/2, height/2 - 50);
 
-  //dagger falls
+  
 
   //p1
-  ellipse(ellipseX, ellipseY, 50, 50);
-  ellipseY = ellipseY+5;
-
-  //function keyIsDown()  {
-    ellipseX += move
+  ellipse(playerX, yVel, 50, 50);
   
+  //gravity
+  yVel += gravity;
+  y += yVel;
+
+  
+  //move keys
+    playerX += move  
     if (keyIsDown(LEFT_ARROW))
       {
-        ellipseX = ellipseX - 2;
+        playerX = playerX - 2;
       }
       if (keyIsDown(RIGHT_ARROW))
         {
-          ellipseX = ellipseX + 3;
+          playerX = playerX + 3;
         }  
 
-        //keyis up then player jumps
-        if (keyIsDown(UP_ARROW))
+        //Jump action
+        if (keyIsDown(UP_ARROW) && !isJumping && playerY >= groundY)
         {
-          ellipseY = ellipseY - 10;
+          yVel = jumpHeight;
+          isJumping = true;
         }
-          else if (keyIsDown(UP_ARROW))
+
+        //ground collision
+        if (playerY >= groundY) {
+          playerY = groundY;
+          isJumping = false;
+          yVel = 0; //stop falling when on the ground
+        }
+
+        /*  else if (keyIsDown(UP_ARROW))
           {
-            ellipseY = ellipseY > 10;
+            playerY = playerY > 10;
           }
   
-          if (ellipseY + 10 <= 100) {  ////if player.y + player.height < ground,,, if player is up in air
-            ellipseY += gravity; 
+          if (playerY - 10 <= 100) {  ////if player.y + player.height < ground,,, if player is up in air
+            playerY += gravity; 
           }
-          ellipseY += yVel // y velocity
-          yVel /= 1.2
-    
+          playerY += yVel // y velocity
+          yVel /= 1.2;
+    */
+
   //player health bar
   fill(255, 0, 0);
   stroke(0);
   rect(10, 10, 100, 15);
   fill(0,255,0);
   stroke(0);
-  rect(10, 10, health, 15);
+  rect(10, 10, playerhealthX, 15);
 	
-  //game is over when ellipse reaches right of screen
-  if (ellipseY > 768) 
-	{ 
-    state = "game over";
-    ellipseY = (width/12, 400); //reset ellipseY value
-  }
+  //game is over when player health reaches 0 or enemy health reaches 0
+  
+    
 }
 
 function gameOver() 
 {
   background(255, 0, 0);
   text("rip!", width/2, height/2);
+  text("click to play again", width/2, height/2.3);
 
 
 
