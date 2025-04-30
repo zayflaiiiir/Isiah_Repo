@@ -4,7 +4,7 @@ mid term game
 
 run-and-gun action level game with traditional hand drawn design
 American exchange student in Kyoto japan is possesed by a cursed Ōdachi swordsman found on a school trip to the museum
-Kyoto is hacked by a cursed ai spirit who is posessing the lives of kyoto residents through cellulor usage
+Kyoto is hacked by a cursed mad scientist who digitally coded his soul into the web who is posessing the lives of kyoto residents through cellulor usage
 
 CONTROLS
 up down left right keypad = right left bottom top
@@ -27,65 +27,68 @@ double jump S - arrow head
 
 */
 
-//enemies
+//load fonts and images using loadFont in preLoad 
 
+let myFont;
 
+function preLoad()  {
+  myFont = loadFont('fonts/Underwood Champion.ttf');
+}
 
 let state = "pregame"; //storing our states as Strings 
 
 let stage= 0;
 
-
-/*
 //player
-let player = 10; //ellipse X, Y is our p1
-let player = 400; //y position of p1
-let move = 0;
-*/
+let player;
+let enemy;
 
-
-//enemy
-let player, enemy;
-
-
-function player1() {
-//p1
-ellipse(player, yVel, 50, 50);
-}
-
-//create player health bar
+//player health
 let maxplayerHealth = 250;
 let currentplayerHealth = maxplayerHealth;
-let displayedHealth = maxplayerHealth;
+let displayHealth = maxplayerHealth;
 
-function playerHealth() {
-  //simulating damage is taken
-  if (keyIsPressed) {
-    currentplayerHealth = max(0, currentplayerHealth - 25); //if player is hit by key is downm when hit health drops 25 each time
-  }
+let playerSpeed = 0;
 
-  //transition health depletion
-  displayedHealth = lerp(displayedHealth, currentplayerHealth, 20);
+//jump
+let x, y, groundY;
+let yVel, gravity, jumpHeight;
+let isJumping = false;
 
-  //draw health background
-  fill(250);
-  rect(50, 80, 300, 30);
+function keyIsPressed() {
 
-  //draw current health
-  fill(69, 196, 176, 77);
-  let healthWidth = map(displayedHealth, 0, maxplayerHealth, 0, 300);
-  rect(50, 80, healthWidth, 30);
 }
 
+/*
+let yowhereisAmeer = image();
+let Odatchi = image();
+
+function yowhereisAmeer()  {
+  move();
+  playerHealth();
+
+}
+*/
+
+let playerX;
+
+
+
 function move() {
-  player += move  
+  //gravity
+  yVel += gravity;
+  y += yVel;
+
+  
+  //move keys
+    player += move  
     if (keyIsDown(LEFT_ARROW))
       {
-        player = player - 2;
+        player = playerX - 2;
       }
       if (keyIsDown(RIGHT_ARROW))
         {
-          player = player + 3;
+          player = playerX + 3;
         }  
 
         //Jump action
@@ -96,36 +99,69 @@ function move() {
         }
 
         //ground collision
-        if (player >= groundY) {
+        if (player >= groundY) { //write if player is greater then or equal to ground
           player = groundY;
           isJumping = false;
           yVel = 0; //stop falling when on the ground
-        }
-  //gravity
-  yVel += gravity;
-  y += yVel;
 
-  //jump
-let x, y, groundY;
-let yVel, gravity, jumpHeight;
-let isJumping = false;
+          player = 10;
+        player = height - 20; //initial position on the ground
+       groundY = height - 20;
+       yVel = 0;
+      gravity = 1;
+      jumpHeight = -20;
+        }
 }
 
+
+function playerHealth() {
+  //simulating taking damage to player. 50 is the total u can take till 250
+  if (keyIsPressed) {
+    currentplayerHealth = max(0, currentplayerHealth - 25); //25 damage taken
+  }
+
+  displayHealth = lerp(displayHealth, currentplayerHealth, 20);
+
+  //draw health bar background
+  fill(100);
+  rect(50, 80, 300, 30);
+
+  //draw current health
+  fill(255, 0, 0);
+  let healthWidth = map(displayHealth, 0, maxplayerHealth, 0, 300);
+  rect (50, 80, healthWidth, 30);
+}
+
+function enemyHealth()  {
+
+}
+
+function enemy1() {
+
+}
+
+
+/*enemy
+let enemyX = 755;
+let enemyY = 400;
+let enemyHealth = 100;
+let enemySpeed = 0;
+*/
+
+let width = 768;
+let height = 420;
+ 
 function setup() 
 {
   textAlign(CENTER);
   createCanvas (768, 420);
+  textFont(myFont);
   textSize(20);
 
+  playerHealth();
+  enemyHealth();
 
-  player = 
-  enemy = 
-  player = 10;
-  player = height - 20; //initial position on the ground
-  groundY = height - 20;
-  yVel = 0;
-  gravity = 1;
-  jumpHeight = -20;
+  
 }
 
 
@@ -153,18 +189,6 @@ function draw()
   }
 	
   print(state);
-
-  player.update();
-  enemy.update();
-
-  player.displayedHealth();
-  enemy.displayedHealth();
-
-  keyPressed();
-  takeDamage();
-  playerHealth();
-
-  
 }
 
 function mousePressed() 
@@ -180,18 +204,18 @@ function mousePressed()
   stage++;
 }
 
-//let text = (r, g, b);
+/*let text = (r, g, b);
 r= random(225, 0, 0);
 g= random(0, 225, 0);
 b= random(0, 0, 225);
+*/
 
 
-
-//loadscreen
+      
 function preGame() 
 {
   background(37, 38, 23);
-
+  textFont(myFont);
   
   
   noStroke(0);
@@ -253,6 +277,10 @@ function preGame()
   text("story", width/1.5, height/1.8);
   text("options", width/1.5, height/1.6);
   text('settings', width/1.5, height/1.4);
+  
+  
+  
+
 }
 
 function characterSelect()
@@ -263,10 +291,12 @@ function characterSelect()
   
 }
 
+
+
 function game() 
 {
   /*
-  player has 250 health if player drops to 100 he will die and game ends
+  player has 100 health if player drops to 100 he will die and game ends
 - animate jump, dash attack commands
 
 - player faces npc that also have individual life and if they reach 0 they die aswell
@@ -274,14 +304,19 @@ function game()
 **IF SLASH TOUCHES NPC, NPC LOSES 20 HP (FOR EXAMPLE)
   */
 
+  textFont(myFont);
   background(0, 0, 255);
   text("health bar", 70, 45);
   text("player advances to next stage when you reach 768", width/2, height/2 + 50);
 
   text("use arrow keys", width/2, height/2 - 50);
 
-  //move keys
-    
+  
+
+  //p1
+  
+  
+  
 
         /*  else if (keyIsDown(UP_ARROW))
           {
@@ -295,10 +330,13 @@ function game()
           yVel /= 1.2;
     */
 
-          keyPressed();
-          takeDamage();
-          playerHealth();
-          player1(); 
+  //player health bar
+  fill(255, 0, 0);
+  stroke(0);
+  rect(10, 10, 100, 15);
+  fill(0,255,0);
+  stroke(0);
+  rect(10, 10, playerhealthX, 15);
 	
   //game is over when player health reaches 0 or enemy health reaches 0
   
@@ -310,7 +348,7 @@ function gameOver()
   background(255, 0, 0);
   text("rip!", width/2, height/2);
   text("click to play again", width/2, height/2.3);
-
+  textFont(myFont);
 
 
 }
